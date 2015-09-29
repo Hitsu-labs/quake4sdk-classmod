@@ -388,7 +388,7 @@ void idProjectile::Launch( const idVec3 &start, const idVec3 &dir, const idVec3 
 	projectileFlags.detonate_on_world	= spawnArgs.GetBool( "detonate_on_world" );
 	projectileFlags.detonate_on_actor	= spawnArgs.GetBool( "detonate_on_actor" );
 	projectileFlags.randomShaderSpin	= spawnArgs.GetBool( "random_shader_spin" );
-	projectileFlags.detonate_on_bounce  = spawnArgs.GetBool( "detonate_on_bounce" );
+	projectileFlags.detonate_on_bounce  = false;//spawnArgs.GetBool( "detonate_on_bounce" );
 
 	lightStartTime = 0;
 	lightEndTime = 0;
