@@ -1205,7 +1205,7 @@ idProjectile::Explode
 void idProjectile::Explode( const trace_t *collision, const bool showExplodeFX, idEntity *ignore, const char *sndExplode ) {
 	idVec3		normal, endpos;
 	int 		removeTime;
-
+	return; //shouldnt be here
 	if ( state == EXPLODED || state == FIZZLED ) {
 		return;
 	}
