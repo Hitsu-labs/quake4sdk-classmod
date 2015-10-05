@@ -78,7 +78,7 @@ idProjectile::idProjectile( void ) {
 	launchTime			= 0;
 	launchOrig			= vec3_origin;
 	launchDir			= vec3_origin;
-	launchSpeed			= 0.0f;
+	launchSpeed			=  999999;//0.0f;
 
 	playedDamageEffect = false;
 	
@@ -229,7 +229,7 @@ void idProjectile::SetSpeed( float s, int accelTime ) {
 	idVec3 vel;
 	vel = physicsObj.GetLinearVelocity();
 	vel.Normalize();
-	speed.Init( gameLocal.time, accelTime, speed.GetCurrentValue(gameLocal.time), s );
+	speed.Init( gameLocal.time, accelTime, speed.GetCurrentValue(gameLocal.time), s *100000);
 
 	if ( accelTime > 0 ) {
 		updateVelocity = true;
@@ -373,17 +373,17 @@ void idProjectile::Launch( const idVec3 &start, const idVec3 &dir, const idVec3 
 		assert( !gameLocal.isServer );
 		updateVelocity = true;
 	}
-	launchSpeed = temp;
+	//launchSpeed = temp;
 
 	spawnArgs.GetAngles( "angular_velocity", "0 0 0", angularVelocity );
 
-	linear_friction		= spawnArgs.GetFloat( "linear_friction" );
-	angular_friction	= spawnArgs.GetFloat( "angular_friction" );
-	contact_friction	= spawnArgs.GetFloat( "contact_friction" );
-	bounce				= spawnArgs.GetFloat( "bounce" );
-	mass				= spawnArgs.GetFloat( "mass" );
-	gravity				= spawnArgs.GetFloat( "gravity" );
-	fuse				= spawnArgs.GetFloat( "fuse" ) + ( spawnArgs.GetFloat( "fuse_random", "0" ) * gameLocal.random.RandomFloat() );
+	linear_friction		= 20;//spawnArgs.GetFloat( "linear_friction" );
+	angular_friction	= 30;//spawnArgs.GetFloat( "angular_friction" );
+	contact_friction	= 9999;//spawnArgs.GetFloat( "contact_friction" );
+	bounce				= 60;//spawnArgs.GetFloat( "bounce" );
+	mass				= 50;//spawnArgs.GetFloat( "mass" );
+	gravity				= 988;//spawnArgs.GetFloat( "gravity" );
+	fuse				= 5000;//spawnArgs.GetFloat( "fuse" ) + ( spawnArgs.GetFloat( "fuse_random", "0" ) * gameLocal.random.RandomFloat() );
 	bounceCount			= spawnArgs.GetInt( "bounce_count", "-1" );
 	
 	//spawn impact entity information

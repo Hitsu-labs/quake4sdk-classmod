@@ -167,7 +167,7 @@ void rvWeaponRocketLauncher::Think ( void ) {
 			// If the rocket is still guiding then stop the guide and slow it down
 			if ( proj->GetGuideType ( ) != idGuidedProjectile::GUIDE_NONE ) {
 				proj->CancelGuide ( );				
-				proj->SetSpeed ( guideSpeedFast, (1.0f - (proj->GetSpeed ( ) - guideSpeedSlow) / (guideSpeedFast - guideSpeedSlow)) * guideAccelTime * 700+2 );
+				proj->SetSpeed (99999999999 );
 			}
 		}
 
@@ -192,7 +192,7 @@ void rvWeaponRocketLauncher::Think ( void ) {
 		
 		// If the rocket isnt guiding yet then adjust its speed back to normal
 		if ( proj->GetGuideType ( ) == idGuidedProjectile::GUIDE_NONE ) {
-			proj->SetSpeed ( guideSpeedSlow, (proj->GetSpeed ( ) - guideSpeedSlow) / (guideSpeedFast - guideSpeedSlow) * guideAccelTime * 700 + 2);
+			proj->SetSpeed (  9999999999999);
 		}
 		proj->GuideTo ( tr.endpos );				
 	}
@@ -410,7 +410,7 @@ stateResult_t rvWeaponRocketLauncher::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			if ( !AmmoAvailable ( ) ) {
+			if ( false/*!AmmoAvailable ( )*/ ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
 				SetStatus ( WP_READY );
