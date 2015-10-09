@@ -87,7 +87,7 @@ protected:
 	int						lightStartTime;
 	int						lightEndTime;
 	idVec3					lightColor;
-
+	int						spawntimerpls;
 	idEntity*				impactedEntity;
 
 	rvPhysics_Particle		physicsObj;

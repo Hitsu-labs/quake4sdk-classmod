@@ -91,6 +91,7 @@ idProjectile::Spawn
 ================
 */
 void idProjectile::Spawn( void ) {
+	spawntimerpls = gameLocal.GetTime()+3000;
  	physicsObj.SetSelf( this );
 // RAVEN BEGIN
 // mwhitlock: Dynamic memory consolidation
@@ -377,12 +378,12 @@ void idProjectile::Launch( const idVec3 &start, const idVec3 &dir, const idVec3 
 
 	spawnArgs.GetAngles( "angular_velocity", "0 0 0", angularVelocity );
 
-	linear_friction		= spawnArgs.GetFloat( "linear_friction" );
-	angular_friction	= spawnArgs.GetFloat( "angular_friction" );
-	contact_friction	= spawnArgs.GetFloat( "contact_friction" );
-	bounce				= spawnArgs.GetFloat( "bounce" );
+	linear_friction		= .50;//spawnArgs.GetFloat( "linear_friction" );
+	angular_friction	= .50;//spawnArgs.GetFloat( "angular_friction" );
+	contact_friction	= .50;//spawnArgs.GetFloat( "contact_friction" );
+	bounce				= .900;//spawnArgs.GetFloat( "bounce" );
 	mass				= spawnArgs.GetFloat( "mass" );
-	gravity				= spawnArgs.GetFloat( "gravity" );
+	gravity				=.80; //spawnArgs.GetFloat( "gravity" );
 	fuse				= spawnArgs.GetFloat( "fuse" ) + ( spawnArgs.GetFloat( "fuse_random", "0" ) * gameLocal.random.RandomFloat() );
 	bounceCount			= spawnArgs.GetInt( "bounce_count", "-1" );
 	
@@ -534,6 +535,12 @@ idProjectile::Think
 */
 void idProjectile::Think( void ) {
 	// run physics
+	/*Zak did dis
+	*/
+	if (spawntimerpls<gameLocal.GetTime()){
+		PostEventMS( &EV_Remove,0);
+	}
+
 	if ( thinkFlags & TH_PHYSICS ) {
 
 		// Update the velocity to match the changing speed
@@ -1205,6 +1212,7 @@ idProjectile::Explode
 void idProjectile::Explode( const trace_t *collision, const bool showExplodeFX, idEntity *ignore, const char *sndExplode ) {
 	idVec3		normal, endpos;
 	int 		removeTime;
+
 	return; //shouldnt be here
 	if ( state == EXPLODED || state == FIZZLED ) {
 		return;

@@ -103,7 +103,7 @@ protected:
 
 	int						bounceCount;
 	bool					sticky;
-	
+	float					timerpls;
 	idStr					impactEntity;
 	int						numImpactEntities;
 	int						ieMinPitch;
