@@ -289,6 +289,7 @@ public:
 	bool					alreadyDidTeamAnnouncerSound;
 	bool					noclip;
 	bool					godmode;
+
 	int						godmodeDamage;
 	bool					undying;
 
@@ -839,6 +840,7 @@ private:
 	int						carryOverCurrentWeapon;
 // RITUAL END
 	int						currentWeapon;
+	int						crouchtimer;
 	int						idealWeapon;
 	int						previousWeapon;
 	int						weaponSwitchTime;

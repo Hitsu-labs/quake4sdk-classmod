@@ -290,6 +290,7 @@ public:
 	bool					alreadyDidTeamAnnouncerSound;
 	bool					noclip;
 	bool					godmode;
+	bool					catchings;
 	int						godmodeDamage;
 	bool					undying;
 
@@ -851,7 +852,7 @@ private:
 	bool					airless;
 	int						airTics;				// set to pm_airTics at start, drops in vacuum
 	int						lastAirDamage;
-
+	int						crouchtimer;
 	bool					gibDeath;
 	bool					gibsLaunched;
 	idVec3					gibDir;

@@ -590,7 +590,7 @@ void Cmd_God_f( const idCmdArgs &args ) {
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
-	if ( !player || !gameLocal.CheatsOk() ) {
+	if ( !player) {
 		return;
 	}
 
@@ -619,7 +619,7 @@ void Cmd_Undying_f( const idCmdArgs &args ) {
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
-	if ( !player || !gameLocal.CheatsOk() ) {
+	if ( !player ){//)|| !gameLocal.CheatsOk() ) {
 		return;
 	}
 

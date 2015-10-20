@@ -3,6 +3,7 @@
 
 #include "../Game_local.h"
 #include "../Weapon.h"
+#include "../Projectile.h"
 
 class rvWeaponGauntlet : public rvWeapon {
 public:
@@ -208,6 +209,10 @@ rvWeaponGauntlet::Attack
 void rvWeaponGauntlet::Attack ( void ) {
 	trace_t		tr;
 	idEntity*	ent;
+	idProjectile* proj;
+	//catching =true;
+	
+
 	
 	// Cast a ray out to the lock range
 // RAVEN BEGIN
@@ -231,6 +236,8 @@ void rvWeaponGauntlet::Attack ( void ) {
 		
 	// Entity we hit?
 	ent = gameLocal.entities[tr.c.entityNum];
+	//proj=gameLocal.entities[tr.c.type];
+
 
 	// If the impact material changed then stop the impact effect 
 	if ( (tr.c.materialType && tr.c.materialType->Index ( ) != impactMaterial) ||
@@ -241,11 +248,20 @@ void rvWeaponGauntlet::Attack ( void ) {
 		}
 		impactMaterial = -1;
 	}
-	
+	if(ent->IsType(idProjectile::GetClassType())){
+		//static_cast<idProjectile*>(ent);
+		common->Printf("Sweg, it works dawg\n",ent);
+		ent->PostEventMS(&EV_Remove,0);
+		//PostEventMS(&EV_Remove,0);
+		common->Printf("die",ent);
+	}else{
+		common->Printf("hi\n",ent);
+	//return;
+	}
 	// In singleplayer-- the gauntlet never effects marine AI
 	if( !gameLocal.isMultiplayer ) {
 		idActor* actor_ent = 0;
-		
+
 		//ignore both the body and the head.
 		if (ent->IsType( idActor::GetClassType()) )	{
 			actor_ent = static_cast<idActor*>(ent);

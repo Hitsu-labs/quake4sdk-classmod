@@ -91,7 +91,7 @@ idProjectile::Spawn
 ================
 */
 void idProjectile::Spawn( void ) {
-	spawntimerpls = gameLocal.GetTime()+3000;
+	spawntimerpls = gameLocal.GetTime()+5000;
  	physicsObj.SetSelf( this );
 // RAVEN BEGIN
 // mwhitlock: Dynamic memory consolidation
@@ -262,7 +262,7 @@ void idProjectile::Create( idEntity* _owner, const idVec3 &start, const idVec3 &
  	physicsObj.SetOrigin( start );
  	physicsObj.SetAxis( axis );
 
- 	physicsObj.GetClipModel()->SetOwner( ignore ? ignore : _owner );
+ 	//physicsObj.GetClipModel()->SetOwner( ignore ? ignore : _owner ); i think this disables reactions...
 	physicsObj.extraPassEntity = extraPassEntity;
 
 	owner = _owner;
@@ -538,6 +538,8 @@ void idProjectile::Think( void ) {
 	/*Zak did dis
 	*/
 	if (spawntimerpls<gameLocal.GetTime()){
+
+		common->Printf("i died \n");
 		PostEventMS( &EV_Remove,0);
 	}
 
@@ -646,6 +648,8 @@ idProjectile::Collide
 */
 bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity ) {
 	bool dummy = false;
+	owner =NULL;
+	common->Printf("owner been set to null");
 	return Collide( collision, velocity, dummy );
 }
 
@@ -656,6 +660,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
  	const char*	damageDefName;
  	idVec3		dir;
  	bool		canDamage;
+
  	
  	hitTeleporter = false;
 
@@ -764,9 +769,11 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 	}
 
  	// just get rid of the projectile when it hits a player in noclip
- 	if ( ent->IsType( idPlayer::GetClassType() ) && static_cast<idPlayer *>( ent )->noclip ) {
-   		PostEventMS( &EV_Remove, 0 );
+ 	if ( ent->IsType( idPlayer::GetClassType() )){
+		//&& static_cast<idPlayer *>( ent )->noclip ) {
+   		//PostEventMS( &EV_Remove, 0 );
   		common->DPrintf( "Projectile collision no impact\n" );
+		common->Printf("Hey, I collididdsidfjsid with a player....and your mom");
    		return true;
    	}
 
@@ -825,6 +832,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 		return false;
 	} else if ( canDamage && ent->IsType( idActor::GetClassType() ) ) {
 		if ( !projectileFlags.detonate_on_actor ) {
+
 			return false;
 		}
 	} else {
@@ -936,6 +944,8 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
  			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
 			
 			if( owner && owner->IsType( idPlayer::GetClassType() ) && ent->IsType( idActor::GetClassType() ) ) {
+				if(true){
+				}
 				statManager->WeaponHit( (const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0 );			
 				hitCount++;
 			}

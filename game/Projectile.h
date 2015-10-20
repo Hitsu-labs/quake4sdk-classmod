@@ -103,6 +103,7 @@ protected:
 
 	int						bounceCount;
 	bool					sticky;
+	//bool					catching; //catching boolean to see if the player is catching or not
 	float					timerpls;
 	idStr					impactEntity;
 	int						numImpactEntities;

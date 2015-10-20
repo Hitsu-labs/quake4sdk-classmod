@@ -7,7 +7,7 @@
 #pragma hdrstop
 
 #include "Game_local.h"
-
+#include "Projectile.h"
 #include "ai/AI.h"
 #include "ai/AI_Manager.h"
 #include "Weapon.h"
@@ -17,6 +17,7 @@
 #include "ai/AAS_tactical.h"
 #include "Healing_Station.h"
 #include "ai/AI_Medic.h"
+int crouchtimer;
 
 // RAVEN BEGIN
 // nrausch: support for turning the weapon change ui on and off
@@ -1081,6 +1082,7 @@ idPlayer::idPlayer() {
 	doInitWeapon			= false;
 	noclip					= false;
 	godmode					= false;
+
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
 
 	spawnAnglesSet			= false;
@@ -9281,6 +9283,10 @@ Called every tic for each player
 */
 void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
+	
+	/*if (crouchtimer<gameLocal.GetTime()){
+	
+	}*/
  
 	if ( talkingNPC ) {
 		if ( !talkingNPC.IsValid() ) {
@@ -13692,6 +13698,7 @@ idPlayer::IsCrouching
 ===================
 */
 bool idPlayer::IsCrouching( void ) const {
+	int crouchtimer=3000;
 	return physicsObj.IsCrouching();
 }
 

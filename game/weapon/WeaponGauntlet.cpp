@@ -3,6 +3,10 @@
 
 #include "../Game_local.h"
 #include "../Weapon.h"
+#include "../projectile.h"
+#include "../Projectile.h"
+
+
 
 class rvWeaponGauntlet : public rvWeapon {
 public:
@@ -98,7 +102,7 @@ void rvWeaponGauntlet::Spawn ( void ) {
 	bladeSpinSlow	= spawnArgs.GetAngles ( "blade_spinslow" );
 	bladeAccel		= SEC2MS ( spawnArgs.GetFloat ( "blade_accel", ".25" ) );
 	
-	range			= spawnArgs.GetFloat ( "range", "32" );
+	range			= 90000;//spawnArgs.GetFloat ( "range", "32" );
 
 	impactMaterial = -1;
 	impactEffect   = NULL;
@@ -231,6 +235,21 @@ void rvWeaponGauntlet::Attack ( void ) {
 		
 	// Entity we hit?
 	ent = gameLocal.entities[tr.c.entityNum];
+	common->Printf("Not swg",ent);
+	// if identity is projectile, ent will despawn the projectile. Still need to figure out the logic of killing the player with owner system
+	//if (ent->IsType(idProjectile::GetClassType())){
+		//if (ent->IsType(idProjectile::GetClassType())&&static_cast<idProjectile *>( ent )){
+		//common->Printf("Sweg, it works dawg");
+		//ent->PostEventMS(&EV_Remove,0);
+//		catching = false;
+
+		//return;
+	/*}
+	else{
+		common->Printf("swg",ent);
+	}*/
+
+
 
 	// If the impact material changed then stop the impact effect 
 	if ( (tr.c.materialType && tr.c.materialType->Index ( ) != impactMaterial) ||
