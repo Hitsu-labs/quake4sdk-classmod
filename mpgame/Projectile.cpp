@@ -648,8 +648,8 @@ idProjectile::Collide
 */
 bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity ) {
 	bool dummy = false;
-	owner =NULL;
-	common->Printf("owner been set to null");
+	//owner =NULL;
+	//common->Printf("owner been set to null");
 	return Collide( collision, velocity, dummy );
 }
 
@@ -832,8 +832,10 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 		return false;
 	} else if ( canDamage && ent->IsType( idActor::GetClassType() ) ) {
 		if ( !projectileFlags.detonate_on_actor ) {
+			ent->Damage(this,owner,dir,damageDefName,99999.1f,CLIPMODEL_ID_TO_JOINT_HANDLE(collision.c.id));// DEALS DAMAGE ON IMPACT!
+			owner = NULL;
 
-			return false;
+			return true;
 		}
 	} else {
 		bool bounce = false;
@@ -883,7 +885,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
  				if ( damageDefName[0] != '\0' ) {
 					idVec3 dir = velocity;
 					dir.Normalize();
-					actualHitEnt->Damage( this, owner, dir, damageDefName, damagePower, CLIPMODEL_ID_TO_JOINT_HANDLE( collision.c.id ) );
+					actualHitEnt->Damage( this, owner, dir, damageDefName, 99999.1f, CLIPMODEL_ID_TO_JOINT_HANDLE( collision.c.id ) );
 				}
 			}
 			return false;		
@@ -941,7 +943,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 				}
 			}	
 // RAVEN END
- 			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
+ 			ent->Damage( this, owner, dir, damageDefName, 99999.1f, hitJoint ); //moar damagepls
 			
 			if( owner && owner->IsType( idPlayer::GetClassType() ) && ent->IsType( idActor::GetClassType() ) ) {
 				if(true){

@@ -220,7 +220,7 @@ void rvWeaponGauntlet::Attack ( void ) {
 	gameLocal.TracePoint(	owner, tr, 
 							playerViewOrigin, 
 							playerViewOrigin + playerViewAxis[0] * range, 
-							MASK_SHOT_RENDERMODEL, owner );
+							16910853/*MASK_SHOT_RENDERMODEL8*/, owner );
 // RAVEN END
 	owner->WeaponFireFeedback( &weaponDef->dict );
 
